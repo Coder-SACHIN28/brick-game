@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Brick Game: Retro Classic Definitive Edition</title>
+  
+  <!-- Relative stylesheet path -->
+  <link rel="stylesheet" href="./style.css">
+
+  <!-- Favicon and Meta -->
+  <link rel="icon" type="image/png" href="./assets/icon.png">
+</head>
+<body>
+  <!-- Ambient Centered Stage -->
+  <div class="tabletop">
+
+    <!-- Retro Handheld Console Shell (Strictly Centered) -->
+    <main class="console-shell" id="console-shell">
+      
+      <!-- Top Screws & Speaker Grille -->
+      <div class="shell-top-bar">
+        <div class="screw screw-left"></div>
+        <div class="speaker-grille">
+          <div class="slot"></div>
+          <div class="slot"></div>
+          <div class="slot"></div>
+          <div class="slot"></div>
+          <div class="slot"></div>
+          <div class="slot"></div>
+        </div>
+        <div class="screw screw-right"></div>
+      </div>
+
+      <!-- Vintage Branding Header -->
+      <header class="console-header">
+        <h1 class="brand-title">BRICK GAME</h1>
+        <div class="brand-sub">9999 in 1 &bull; DEFINITIVE EDITION</div>
+      </header>
+
+      <!-- LCD Display Window & Screen Bezel -->
+      <section class="lcd-window-frame">
+        <div class="lcd-bezel">
+          <div class="lcd-screen-glass">
+            <canvas id="lcd-canvas"></canvas>
+          </div>
+        </div>
+      </section>
+
+      <!-- Small Function Buttons Bar (With Highlighted Red ON/OFF Button) -->
+      <nav class="function-bar">
+        <div class="function-item">
+          <button class="pill-btn btn-func btn-power" id="btn-on-off" aria-label="On/Off or Start"></button>
+          <span class="func-label label-power">ON/OFF</span>
+        </div>
+        <div class="function-item">
+          <button class="pill-btn btn-func" id="btn-sound" aria-label="Toggle Sound"></button>
+          <span class="func-label">SOUND</span>
+        </div>
+        <div class="function-item">
+          <button class="pill-btn btn-func" id="btn-pause" aria-label="Pause Game"></button>
+          <span class="func-label">PAUSE</span>
+        </div>
+        <div class="function-item">
+          <button class="pill-btn btn-func" id="btn-reset" aria-label="Reset Game"></button>
+          <span class="func-label">RESET</span>
+        </div>
+      </nav>
+
+      <!-- CONSOLE QUICK DECK (Game Mode Switcher & Speed Stepper) -->
+      <section class="console-deck">
+        <button class="deck-btn btn-deck-mode" id="btn-switch-mode" title="Switch Between Tetris, Tank, Racing, Snake">
+          <span class="deck-mode-tag">GAME:</span>
+          <span class="deck-mode-name" id="lbl-active-mode">MODE A: TETRIS</span>
+          <span class="deck-mode-icon">🔄</span>
+        </button>
+
+        <div class="deck-speed-group" title="Adjust Game Speed / Level (1 to 20)">
+          <button class="stepper-btn" id="btn-speed-down" aria-label="Speed Down">◀</button>
+          <div class="speed-readout">
+            <span class="speed-title">SPD</span>
+            <span class="speed-num" id="lbl-speed-val">01</span>
+          </div>
+          <button class="stepper-btn" id="btn-speed-up" aria-label="Speed Up">▶</button>
+        </div>
+      </section>
+
+      <!-- Toolbar Buttons: Guide, Layout, Ghost, Themes, 2X Boost -->
+      <div class="toolbar-bar">
+        <button class="tool-btn btn-guide-cta" id="btn-open-tutorial" title="Open How to Play & Guide">
+          <span>❓ GUIDE</span>
+        </button>
+        <button class="tool-btn" id="btn-toggle-layout" title="Toggle Touch Controller Layout">
+          <span id="lbl-layout">LAYOUT: SPLIT</span>
+        </button>
+        <button class="tool-btn active" id="btn-toggle-ghost" title="Toggle Ghost Piece Projection">
+          <span>GHOST: ON</span>
+        </button>
+        <button class="tool-btn" id="btn-open-theme" title="Open Custom Theme Studio">
+          <span>🎨 THEMES</span>
+        </button>
+        <button class="tool-btn btn-boost-cta" id="btn-reward-boost" title="Watch Video Ad for 2X Score Multiplier">
+          <span id="lbl-boost-status">⚡ 2X SCORE</span>
+        </button>
+      </div>
+
+      <!-- CONTROLLER CLUSTERS CONTAINER -->
+      <section class="controls-area">
+        
+        <!-- LAYOUT A: Ergonomic Split-Thumb (Aligned Left/Right, Solves Missclicks) -->
+        <div class="controls-cluster controls-split" id="controls-split">
+          <!-- Left Thumb Cluster -->
+          <div class="split-thumb-group split-left">
+            <div class="split-horizontal-row">
+              <button class="round-btn btn-dir btn-left-dir" id="btn-split-left" aria-label="Move Left">
+                <span class="btn-icon">◀</span>
+              </button>
+              <button class="round-btn btn-dir btn-right-dir" id="btn-split-right" aria-label="Move Right">
+                <span class="btn-icon">▶</span>
+              </button>
+            </div>
+            <button class="round-btn btn-dir btn-down-dir" id="btn-split-down" aria-label="Soft Drop or Down">
+              <span class="btn-icon">▼</span>
+            </button>
+          </div>
+
+          <!-- Center Utility Button (Hold / Swap) -->
+          <div class="split-center-group">
+            <button class="pill-btn btn-action-hold" id="btn-split-hold" aria-label="Hold Piece">
+              <span class="hold-text">HOLD</span>
+            </button>
+          </div>
+
+          <!-- Right Thumb Cluster -->
+          <div class="split-thumb-group split-right">
+            <div class="split-rotate-row">
+              <button class="round-btn btn-action btn-rotate-ccw" id="btn-split-rotate-ccw" aria-label="Rotate CCW / Action">
+                <span class="btn-icon">↺</span>
+              </button>
+              <button class="round-btn btn-action btn-rotate-cw" id="btn-split-rotate-cw" aria-label="Rotate CW / Shoot / Turbo">
+                <span class="btn-icon">ACTION</span>
+              </button>
+            </div>
+            <button class="round-btn btn-action btn-hard-drop" id="btn-split-hard-drop" aria-label="Instant Drop / Fire">
+              <span class="btn-icon">⚡ FIRE</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- LAYOUT B: Classic Nostalgia D-Pad (90s Retro Cross) -->
+        <div class="controls-cluster controls-classic" id="controls-classic" style="display: none;">
+          <!-- Left Cross D-Pad -->
+          <div class="dpad-cross-container">
+            <div class="dpad-cross">
+              <button class="dpad-btn dpad-up" id="btn-classic-up" aria-label="D-Pad Up / Rotate">
+                <span>▲</span>
+              </button>
+              <button class="dpad-btn dpad-left" id="btn-classic-left" aria-label="D-Pad Left">
+                <span>◀</span>
+              </button>
+              <div class="dpad-center"></div>
+              <button class="dpad-btn dpad-right" id="btn-classic-right" aria-label="D-Pad Right">
+                <span>▶</span>
+              </button>
+              <button class="dpad-btn dpad-down" id="btn-classic-down" aria-label="D-Pad Down / Drop">
+                <span>▼</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Classic Aux Action Buttons (Hold & Hard Drop) -->
+          <div class="classic-aux-group">
+            <button class="pill-btn btn-action-hold" id="btn-classic-hold" aria-label="Hold Piece">
+              <span class="hold-text">HOLD</span>
+            </button>
+            <button class="pill-btn btn-action-drop" id="btn-classic-hard-drop" aria-label="Drop / Fire">
+              <span class="hold-text">DROP</span>
+            </button>
+          </div>
+
+          <!-- Classic Giant Rotate Button -->
+          <div class="classic-action-group">
+            <button class="round-btn btn-classic-big-rotate" id="btn-classic-action-rotate" aria-label="Rotate / Action">
+              <span class="big-rotate-text">ACTION</span>
+            </button>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- Desktop Keyboard Guide Strip -->
+      <footer class="keyboard-legend">
+        <span><b>WASD / Arrows:</b> Move & Drop</span>
+        <span><b>Space / W:</b> Action / Fire</span>
+        <span><b>C / Shift:</b> Hold</span>
+        <span><b>P:</b> Pause</span>
+      </footer>
+
+    </main>
+
+  </div>
+
+  <!-- HOW TO PLAY & QUICK GUIDE TUTORIAL MODAL -->
+  <div class="modal-backdrop" id="modal-tutorial">
+    <div class="modal-card modal-tutorial-card">
+      <div class="modal-header">
+        <h2>🕹️ HOW TO PLAY & GUIDE</h2>
+        <button class="btn-close" id="btn-close-tutorial">&times;</button>
+      </div>
+      <div class="modal-body tutorial-body">
+        <div class="tutorial-card-item">
+          <div class="tut-icon">🔴</div>
+          <div class="tut-text">
+            <b>1. Power On & Start:</b>
+            Tap the highlighted <span class="badge-red">RED ON/OFF</span> button to power on and start playing.
+          </div>
+        </div>
+        <div class="tutorial-card-item">
+          <div class="tut-icon">🎮</div>
+          <div class="tut-text">
+            <b>2. Switch Games (4-in-1 Suite):</b>
+            Tap the bottom <b>[GAME: MODE A/B/C/D 🔄]</b> button to easily toggle between:
+            <ul class="tut-list">
+              <li><b>Mode A:</b> Classic Tetris (Lines + Hold Queue)</li>
+              <li><b>Mode B:</b> Tank Battle (Shoot enemy tanks)</li>
+              <li><b>Mode C:</b> Formula Racing (Dodge traffic + Turbo)</li>
+              <li><b>Mode D:</b> Retro Snake (Eat dots, grow tail)</li>
+            </ul>
+          </div>
+        </div>
+        <div class="tutorial-card-item">
+          <div class="tut-icon">⚡</div>
+          <div class="tut-text">
+            <b>3. Speed & Difficulty (1 to 20):</b>
+            Tap the <b>◀ SPD ▶</b> buttons below the screen to change game speed from relaxed (01) to master (20).
+          </div>
+        </div>
+        <div class="tutorial-card-item">
+          <div class="tut-icon">⌨️</div>
+          <div class="tut-text">
+            <b>4. Controls:</b>
+            <b>Desktop PC:</b> Arrow Keys or WASD to steer, Space / W to shoot / rotate, C to hold piece.<br>
+            <b>Mobile Touch:</b> Left thumb steers, Right thumb rotates & fires.
+          </div>
+        </div>
+
+        <div class="tutorial-footer-actions">
+          <button class="btn-primary-action btn-tut-start" id="btn-tutorial-start">
+            GOT IT! START PLAYING 🚀
+          </button>
+          <button class="btn-secondary-action" id="btn-tutorial-skip">
+            SKIP TUTORIAL
+          </button>
+        </div>
+        <div class="tut-remember">
+          <label>
+            <input type="checkbox" id="chk-tutorial-dontshow"> Don't show this popup on startup
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- THEME & COLOR CUSTOMIZER MODAL -->
+  <div class="modal-backdrop" id="modal-theme">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2>CONSOLE THEME STUDIO</h2>
+        <button class="btn-close" id="btn-close-theme">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <section class="theme-section">
+          <h3>AUTHENTIC PRESETS</h3>
+          <div class="theme-presets-grid">
+            <button class="theme-btn active" data-theme="yellow">
+              <span class="swatch" style="background: #e9b32a;"></span>
+              90s Brick Yellow
+            </button>
+            <button class="theme-btn" data-theme="dmg">
+              <span class="swatch" style="background: #c8c5be;"></span>
+              DMG Classic Gray
+            </button>
+            <button class="theme-btn" data-theme="purple">
+              <span class="swatch" style="background: #59447e;"></span>
+              Atomic Purple
+            </button>
+            <button class="theme-btn" data-theme="stealth">
+              <span class="swatch" style="background: #1b1d22;"></span>
+              Cyberpunk OLED
+            </button>
+            <button class="theme-btn" data-theme="cyan">
+              <span class="swatch" style="background: #1ba098;"></span>
+              Retro Turquoise
+            </button>
+            <!-- VIP Rewarded Ad Unlock Themes -->
+            <button class="theme-btn theme-vip" data-theme="gold">
+              <span class="swatch" style="background: #d4af37;"></span>
+              👑 24K Gold [VIP]
+            </button>
+            <button class="theme-btn theme-vip" data-theme="matrix">
+              <span class="swatch" style="background: #00ff66;"></span>
+              ⚡ Neon Cyber [VIP]
+            </button>
+          </div>
+        </section>
+
+        <section class="theme-section">
+          <h3>CUSTOM COLOR BUILDER</h3>
+          <div class="custom-pickers-row">
+            <div class="picker-group">
+              <label for="picker-shell">Shell Plastic</label>
+              <input type="color" id="picker-shell" value="#e9b32a">
+            </div>
+            <div class="picker-group">
+              <label for="picker-lcd">LCD Glass Tint</label>
+              <input type="color" id="picker-lcd" value="#9caa88">
+            </div>
+            <div class="picker-group">
+              <label for="picker-btn">Buttons Color</label>
+              <input type="color" id="picker-btn" value="#d83a3a">
+            </div>
+          </div>
+          <button class="btn-primary-action" id="btn-apply-custom">APPLY CUSTOM PALETTE</button>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <!-- REWARDED AD: SECOND CHANCE REVIVE MODAL -->
+  <div class="modal-backdrop" id="modal-revive">
+    <div class="modal-card modal-revive-card">
+      <div class="modal-header">
+        <h2>SECOND CHANCE REVIVE</h2>
+      </div>
+      <div class="modal-body text-center">
+        <p class="revive-desc">GAME OVER! Watch a short sponsor message to revive and keep your high score run alive!</p>
+        <div class="revive-actions">
+          <button class="btn-primary-action btn-revive-cta" id="btn-revive-watch">
+            📺 WATCH AD TO REVIVE
+          </button>
+          <button class="btn-secondary-action" id="btn-revive-skip">
+            NO THANKS, RETRY
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="./src/main.js"></script>
+</body>
+</html>

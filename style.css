@@ -1,0 +1,1085 @@
+/* ==========================================================================
+   Brick Game: Retro Classic Definitive Edition
+   style.css - Authentic 1990s Handheld Console Shell & LCD Styling
+   ========================================================================== */
+
+:root {
+  /* Dynamic Theme Variables (overwritten by ThemeManager) */
+  --shell-bg: #e9b32a;
+  --shell-border: #c2921b;
+  --btn-primary: #d83a3a;
+  --btn-secondary: #2e6be6;
+  --btn-text: #ffffff;
+  --lcd-bg: #9caa88;
+  --lcd-pixel-on: #192514;
+  --lcd-frame-bg: #44474b;
+  --table-bg: #1e222b;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  touch-action: manipulation;
+}
+
+body {
+  background-color: var(--table-bg);
+  background-image: 
+    radial-gradient(#2b3240 10%, transparent 11%),
+    radial-gradient(#2b3240 10%, transparent 11%);
+  background-size: 24px 24px;
+  background-position: 0 0, 12px 12px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: #333;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-x: hidden;
+}
+
+.tabletop {
+  width: 100%;
+  min-height: 100vh;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 14px 10px;
+}
+
+/* ==========================================================================
+   Handheld Console Shell Case
+   ========================================================================== */
+.console-shell {
+  width: 100%;
+  max-width: 440px;
+  margin: 0 auto;
+  flex: 0 0 auto;
+  background-color: var(--shell-bg);
+  border: 4px solid var(--shell-border);
+  border-radius: 28px 28px 48px 48px;
+  box-shadow: 
+    0 20px 45px rgba(0, 0, 0, 0.65),
+    inset 0 4px 6px rgba(255, 255, 255, 0.4),
+    inset 0 -8px 14px rgba(0, 0, 0, 0.35);
+  padding: 16px 18px 24px 18px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: background-color 0.25s ease, border-color 0.25s ease;
+}
+
+/* Top Screws & Speaker Grille */
+.shell-top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.screw {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #888, #333);
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.8), 0 1px 1px rgba(255,255,255,0.3);
+  position: relative;
+}
+
+.screw::after {
+  content: '';
+  position: absolute;
+  top: 5px;
+  left: 2px;
+  width: 8px;
+  height: 2px;
+  background-color: #111;
+  transform: rotate(45deg);
+}
+
+.speaker-grille {
+  display: flex;
+  gap: 6px;
+}
+
+.speaker-grille .slot {
+  width: 4px;
+  height: 18px;
+  background-color: #1a1a1a;
+  border-radius: 2px;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.9), 0 1px 1px rgba(255,255,255,0.2);
+}
+
+/* Header Branding */
+.console-header {
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.brand-title {
+  font-family: Impact, "Arial Black", sans-serif;
+  font-size: 28px;
+  letter-spacing: 3px;
+  color: #1c2331;
+  text-shadow: 0 1px 1px rgba(255,255,255,0.5), 0 -1px 1px rgba(0,0,0,0.3);
+}
+
+.brand-sub {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: #3b4252;
+  margin-top: -2px;
+}
+
+/* ==========================================================================
+   LCD Window Frame & Bezel
+   ========================================================================== */
+.lcd-window-frame {
+  width: 100%;
+  background-color: var(--lcd-frame-bg);
+  border-radius: 12px;
+  padding: 10px;
+  box-shadow: 
+    inset 0 6px 12px rgba(0, 0, 0, 0.7),
+    0 2px 4px rgba(255, 255, 255, 0.3);
+  margin-bottom: 14px;
+}
+
+.lcd-bezel {
+  width: 100%;
+  background-color: #2b2e33;
+  border-radius: 8px;
+  padding: 6px;
+  box-shadow: inset 0 2px 5px rgba(0,0,0,0.8);
+}
+
+.lcd-screen-glass {
+  width: 100%;
+  height: 310px;
+  background-color: var(--lcd-bg);
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.4);
+}
+
+/* Glass glare reflection */
+.lcd-screen-glass::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 45%;
+  background: linear-gradient(135deg, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0.02) 60%, transparent 100%);
+  pointer-events: none;
+}
+
+#lcd-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  image-rendering: pixelated;
+}
+
+/* ==========================================================================
+   Small Function Bar (ON/OFF, SOUND, PAUSE, RESET)
+   ========================================================================== */
+.function-bar {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.08);
+  border-radius: 20px;
+  padding: 6px 12px;
+  margin-bottom: 12px;
+}
+
+.function-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.func-label {
+  font-size: 9px;
+  font-weight: 800;
+  color: #2b303c;
+  letter-spacing: 0.5px;
+}
+
+.pill-btn {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  background: linear-gradient(to bottom, #f0f0f0, #b8b8b8);
+  box-shadow: 0 4px 0 #737373, 0 5px 6px rgba(0,0,0,0.3);
+  border-radius: 12px;
+  transition: transform 0.08s ease, box-shadow 0.08s ease;
+}
+
+.btn-func {
+  width: 32px;
+  height: 16px;
+  background: linear-gradient(to bottom, #ffdd59, #e5a100);
+  box-shadow: 0 3px 0 #a37200, 0 4px 4px rgba(0,0,0,0.3);
+}
+
+/* Highly Contrasted Power ON/OFF Button */
+.btn-power {
+  width: 36px !important;
+  height: 18px !important;
+  background: linear-gradient(to bottom, #ff3b30, #dc2626) !important;
+  box-shadow: 0 3px 0 #991b1b, 0 0 10px rgba(239, 68, 68, 0.7) !important;
+  border: 1px solid #7f1d1d !important;
+  animation: powerPulse 2.5s infinite ease-in-out;
+}
+
+@keyframes powerPulse {
+  0%, 100% { box-shadow: 0 3px 0 #991b1b, 0 0 6px rgba(239, 68, 68, 0.5); }
+  50% { box-shadow: 0 3px 0 #991b1b, 0 0 14px rgba(239, 68, 68, 0.9); }
+}
+
+.label-power {
+  color: #ef4444 !important;
+  font-weight: 900 !important;
+  letter-spacing: 0.8px;
+}
+
+/* ==========================================================================
+   Console Quick Deck (Bottom Mode Selector & Speed Stepper)
+   ========================================================================== */
+.console-deck {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  background-color: rgba(0, 0, 0, 0.12);
+  border-radius: 12px;
+  padding: 6px 10px;
+  margin-bottom: 12px;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.btn-deck-mode {
+  flex: 1;
+  background: linear-gradient(to bottom, #2b313d, #181b22);
+  border: 1px solid #0f1117;
+  border-radius: 8px;
+  padding: 8px 10px;
+  color: #38bdf8;
+  font-family: monospace;
+  font-size: 11px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  box-shadow: 0 3px 0 #0f1117, 0 4px 6px rgba(0,0,0,0.3);
+  transition: all 0.12s ease;
+}
+
+.btn-deck-mode:hover {
+  background: #11141b;
+  color: #7dd3fc;
+}
+
+.btn-deck-mode:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 #0f1117;
+}
+
+.deck-mode-tag {
+  color: #94a3b8;
+  font-size: 10px;
+}
+
+.deck-mode-name {
+  color: #38bdf8;
+  font-weight: 900;
+  letter-spacing: 0.5px;
+}
+
+.deck-mode-icon {
+  font-size: 13px;
+}
+
+.deck-speed-group {
+  display: flex;
+  align-items: center;
+  background: #1e222b;
+  border-radius: 8px;
+  padding: 2px 4px;
+  gap: 4px;
+  border: 1px solid #14171f;
+}
+
+.stepper-btn {
+  background: linear-gradient(to bottom, #475569, #334155);
+  border: none;
+  color: #ffffff;
+  width: 26px;
+  height: 26px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 11px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 2px 0 #1e293b;
+  transition: all 0.08s ease;
+}
+
+.stepper-btn:active {
+  transform: translateY(2px);
+  box-shadow: none;
+}
+
+.speed-readout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 4px;
+}
+
+.speed-title {
+  font-size: 8px;
+  font-weight: 800;
+  color: #94a3b8;
+}
+
+.speed-num {
+  font-family: monospace;
+  font-size: 13px;
+  font-weight: 900;
+  color: #facc15;
+}
+
+.pill-btn:active,
+.pill-btn.active {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 #555, 0 2px 2px rgba(0,0,0,0.3);
+}
+
+/* ==========================================================================
+   Toolbar (Layout toggle, Ghost toggle, Themes)
+   ========================================================================== */
+.toolbar-bar {
+  display: flex;
+  justify-content: space-between;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.tool-btn {
+  flex: 1;
+  background-color: rgba(255, 255, 255, 0.28);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+  padding: 6px 4px;
+  font-size: 10px;
+  font-weight: 700;
+  color: #1a1f2c;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.tool-btn:hover {
+  background-color: rgba(255, 255, 255, 0.45);
+}
+
+.tool-btn.active {
+  background-color: #2b3240;
+  color: #ffffff;
+}
+
+/* ==========================================================================
+   CONTROLLER CLUSTERS (Ergonomic Split-Thumb & Nostalgia D-Pad)
+   ========================================================================== */
+.controls-area {
+  min-height: 200px;
+  margin-bottom: 12px;
+  position: relative;
+}
+
+/* LAYOUT A: Ergonomic Split-Thumb */
+.controls-split {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0 4px;
+}
+
+.split-thumb-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.split-horizontal-row {
+  display: flex;
+  gap: 16px; /* High clearance prevents missclicks */
+}
+
+.split-rotate-row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.round-btn {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 800;
+  transition: transform 0.06s ease, box-shadow 0.06s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Direction Buttons (Left / Right / Down) */
+.btn-dir {
+  width: 58px;
+  height: 58px;
+  background: radial-gradient(circle at 35% 35%, #4b5263, #222631);
+  box-shadow: 0 6px 0 #11141b, 0 8px 12px rgba(0,0,0,0.4);
+  color: #ffffff;
+  font-size: 18px;
+}
+
+.btn-dir:active,
+.btn-dir.active {
+  transform: translateY(4px);
+  box-shadow: 0 2px 0 #11141b, 0 4px 6px rgba(0,0,0,0.4);
+}
+
+/* Action Buttons (Rotate / Hard Drop) */
+.btn-rotate-cw {
+  width: 66px;
+  height: 66px;
+  background: radial-gradient(circle at 35% 35%, var(--btn-primary), #931e1e);
+  box-shadow: 0 6px 0 #630f0f, 0 8px 14px rgba(0,0,0,0.4);
+  color: var(--btn-text);
+  font-size: 11px;
+  letter-spacing: 0.5px;
+}
+
+.btn-rotate-ccw {
+  width: 44px;
+  height: 44px;
+  background: radial-gradient(circle at 35% 35%, #596173, #2b313d);
+  box-shadow: 0 4px 0 #171b22, 0 6px 8px rgba(0,0,0,0.3);
+  color: #ffffff;
+  font-size: 18px;
+}
+
+.btn-hard-drop {
+  width: 80px;
+  height: 42px;
+  border-radius: 20px;
+  background: radial-gradient(circle at 35% 35%, var(--btn-secondary), #17429b);
+  box-shadow: 0 5px 0 #0d2861, 0 6px 10px rgba(0,0,0,0.35);
+  color: #ffffff;
+  font-size: 11px;
+  letter-spacing: 0.5px;
+}
+
+.btn-action:active,
+.btn-action.active {
+  transform: translateY(4px);
+  box-shadow: 0 2px 0 #111, 0 3px 6px rgba(0,0,0,0.4);
+}
+
+/* Hold Button Center */
+.split-center-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.btn-action-hold {
+  width: 52px;
+  height: 32px;
+  background: linear-gradient(to bottom, #38d39f, #1b9a6e);
+  box-shadow: 0 4px 0 #0e6145, 0 5px 6px rgba(0,0,0,0.3);
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 11px;
+}
+
+/* LAYOUT B: Classic Nostalgia D-Pad */
+.controls-classic {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0 6px;
+}
+
+.dpad-cross-container {
+  width: 120px;
+  height: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dpad-cross {
+  width: 114px;
+  height: 114px;
+  position: relative;
+}
+
+.dpad-btn {
+  position: absolute;
+  background: linear-gradient(to bottom, #3a3f4d, #1c202a);
+  border: 1px solid #14171f;
+  outline: none;
+  cursor: pointer;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: inset 0 1px 1px rgba(255,255,255,0.2);
+}
+
+.dpad-up {
+  top: 0;
+  left: 38px;
+  width: 38px;
+  height: 38px;
+  border-radius: 8px 8px 0 0;
+  box-shadow: 0 -3px 0 #0e1015;
+}
+
+.dpad-down {
+  bottom: 0;
+  left: 38px;
+  width: 38px;
+  height: 38px;
+  border-radius: 0 0 8px 8px;
+  box-shadow: 0 4px 0 #0e1015;
+}
+
+.dpad-left {
+  top: 38px;
+  left: 0;
+  width: 38px;
+  height: 38px;
+  border-radius: 8px 0 0 8px;
+  box-shadow: -3px 0 0 #0e1015;
+}
+
+.dpad-right {
+  top: 38px;
+  right: 0;
+  width: 38px;
+  height: 38px;
+  border-radius: 0 8px 8px 0;
+  box-shadow: 3px 0 0 #0e1015;
+}
+
+.dpad-center {
+  position: absolute;
+  top: 38px;
+  left: 38px;
+  width: 38px;
+  height: 38px;
+  background-color: #2b303c;
+}
+
+.dpad-center::after {
+  content: '';
+  position: absolute;
+  top: 9px;
+  left: 9px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #1a1d24, #2b303c);
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.8);
+}
+
+.dpad-btn:active,
+.dpad-btn.active {
+  background: #11141a;
+  transform: scale(0.96);
+}
+
+.classic-aux-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.btn-classic-big-rotate {
+  width: 84px;
+  height: 84px;
+  background: radial-gradient(circle at 35% 35%, var(--btn-primary), #851818);
+  box-shadow: 0 7px 0 #540c0c, 0 10px 16px rgba(0,0,0,0.45);
+  color: var(--btn-text);
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 0.5px;
+}
+
+.btn-classic-big-rotate:active,
+.btn-classic-big-rotate.active {
+  transform: translateY(5px);
+  box-shadow: 0 2px 0 #333, 0 4px 6px rgba(0,0,0,0.4);
+}
+
+/* ==========================================================================
+   Desktop Keyboard Legend
+   ========================================================================== */
+.keyboard-legend {
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px dashed rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  font-size: 10px;
+  color: #3b4252;
+}
+
+.keyboard-legend b {
+  color: #1a1e28;
+}
+
+/* ==========================================================================
+   THEME STUDIO MODAL
+   ========================================================================== */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  padding: 16px;
+}
+
+.modal-backdrop.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-card {
+  width: 100%;
+  max-width: 420px;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+  animation: slideUp 0.25s ease;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.modal-header {
+  background-color: #222631;
+  color: #ffffff;
+  padding: 14px 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-header h2 {
+  font-size: 16px;
+  letter-spacing: 1px;
+}
+
+.btn-close {
+  background: none;
+  border: none;
+  color: #ffffff;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.modal-body {
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.theme-section h3 {
+  font-size: 12px;
+  color: #64748b;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+
+.theme-presets-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+.theme-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  background-color: #f1f5f9;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #1e293b;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.theme-btn:hover {
+  background-color: #e2e8f0;
+}
+
+.theme-btn.active {
+  border-color: #2563eb;
+  background-color: #eff6ff;
+}
+
+.swatch {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1px solid rgba(0,0,0,0.2);
+}
+
+.custom-pickers-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.picker-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.picker-group input[type="color"] {
+  -webkit-appearance: none;
+  border: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.btn-primary-action {
+  width: 100%;
+  background-color: #2563eb;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px;
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.btn-primary-action:hover {
+  background-color: #1d4ed8;
+}
+
+.btn-secondary-action {
+  width: 100%;
+  background-color: transparent;
+  color: #64748b;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  padding: 8px;
+  font-weight: 600;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-secondary-action:hover {
+  background-color: #f1f5f9;
+  color: #334155;
+}
+
+/* CrazyGames User Badge */
+.crazygames-user {
+  display: inline-block;
+  background-color: #1e293b;
+  color: #38bdf8;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  padding: 2px 8px;
+  border-radius: 10px;
+  margin-top: 4px;
+  border: 1px solid #0284c7;
+}
+
+/* Revive Modal Styling */
+.modal-revive-card {
+  max-width: 340px;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.revive-desc {
+  font-size: 13px;
+  line-height: 1.4;
+  color: #334155;
+  margin-bottom: 16px;
+}
+
+.revive-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.btn-revive-cta {
+  background: linear-gradient(135deg, #10b981, #059669);
+  font-size: 14px;
+  padding: 12px;
+}
+
+.btn-revive-cta:hover {
+  background: linear-gradient(135deg, #059669, #047857);
+}
+
+/* ==========================================================================
+   Multi-Game Mode Ribbon & Select Button
+   ========================================================================== */
+.mode-ribbon {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+.mode-select-btn {
+  background: linear-gradient(to bottom, #2b313d, #191c24);
+  border: 1px solid #101217;
+  border-radius: 6px;
+  padding: 5px 12px;
+  color: #38bdf8;
+  font-family: monospace;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.15s ease;
+}
+
+.mode-select-btn:hover {
+  background: #11141b;
+  color: #7dd3fc;
+  border-color: #38bdf8;
+}
+
+.mode-hint {
+  font-size: 9px;
+  color: #94a3b8;
+}
+
+/* 2X Score Booster Rewarded CTA */
+.btn-boost-cta {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: #ffffff;
+  border-color: #b45309;
+  font-weight: 800;
+  animation: pulseGold 2s infinite ease-in-out;
+}
+
+.btn-boost-cta:hover {
+  background: linear-gradient(135deg, #d97706, #b45309);
+}
+
+@keyframes pulseGold {
+  0%, 100% { box-shadow: 0 0 0 rgba(245, 158, 11, 0); }
+  50% { box-shadow: 0 0 10px rgba(245, 158, 11, 0.7); }
+}
+
+.boosted {
+  color: #ffd700;
+  font-weight: 900;
+}
+
+/* VIP Theme Button */
+.theme-vip {
+  border: 1px dashed #eab308;
+  background-color: #fefce8;
+}
+
+/* ==========================================================================
+   Tutorial / Quick Guide Modal Styling
+   ========================================================================== */
+.btn-guide-cta {
+  background: linear-gradient(135deg, #0284c7, #0369a1) !important;
+  color: #ffffff !important;
+  font-weight: 800 !important;
+}
+
+.modal-tutorial-card {
+  max-width: 480px;
+  background-color: #ffffff;
+}
+
+.tutorial-body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: 75vh;
+  overflow-y: auto;
+  padding: 16px 18px;
+}
+
+.tutorial-card-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background-color: #f8fafc;
+  border-radius: 10px;
+  padding: 12px;
+  border: 1px solid #e2e8f0;
+}
+
+.tut-icon {
+  font-size: 24px;
+  line-height: 1;
+}
+
+.tut-text {
+  font-size: 13px;
+  color: #334155;
+  line-height: 1.45;
+}
+
+.tut-list {
+  margin: 6px 0 0 16px;
+  font-size: 12px;
+  color: #475569;
+}
+
+.tut-list li {
+  margin-bottom: 2px;
+}
+
+.badge-red {
+  display: inline-block;
+  background-color: #ef4444;
+  color: #ffffff;
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.5px;
+}
+
+.tutorial-footer-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.btn-tut-start {
+  background: linear-gradient(135deg, #10b981, #059669);
+  padding: 12px;
+  font-size: 14px;
+}
+
+.tut-remember {
+  text-align: center;
+  font-size: 11px;
+  color: #64748b;
+  margin-top: 4px;
+}
+
+.tut-remember label {
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.cg-banner-bottom-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+@media (max-width: 900px) {
+  .cg-banner-sidebar {
+    display: none;
+  }
+}
+
+/* ==========================================================================
+   Mobile Responsive Adjustments
+   ========================================================================== */
+@media (max-width: 440px) {
+  body {
+    padding: 2px;
+  }
+  .console-shell {
+    border-radius: 18px;
+    padding: 12px 10px 18px 10px;
+  }
+  .lcd-screen-glass {
+    height: 290px;
+  }
+  .btn-dir {
+    width: 52px;
+    height: 52px;
+  }
+  .btn-rotate-cw {
+    width: 58px;
+    height: 58px;
+  }
+}
